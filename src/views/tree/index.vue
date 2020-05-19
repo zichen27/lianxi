@@ -1,7 +1,10 @@
 <template>
     <div>
-        aaaaaaaaaaaaaaaa
-        <tree-select :tree="tree" :option="option"></tree-select>
+        <tree-select :tree="tree" :option="option" :defaultExpand="false">
+            <template v-slot="{ item, index }">
+                <div>{{ item.name }}</div>
+            </template>
+        </tree-select>
     </div>
 </template>
 <script>
@@ -58,8 +61,8 @@
                     }
                 ],
                 option:{
-                    itemHeight:25,
-                    visibleCount:10,
+                    height: 500, //滚动容器的高度
+                    itemHeight: 25 // 单个item的高度
                 }
             }
         }
