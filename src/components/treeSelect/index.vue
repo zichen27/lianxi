@@ -14,10 +14,10 @@
                 :style="{
                     paddingLeft: 18 * (item.level - 1) + 'px'
                 }"
+                @click="toggleExpand(item)"
             >
                 <i
                     :class="item.expand ? 'b-tree__expand' : 'b-tree__close'"
-                    @click="toggleExpand(item)"
                     v-if="item.children && item.children.length"
                 />
                 <span v-else style="margin-right:5px"></span>
@@ -70,6 +70,7 @@
                     parent = null,
                     defaultExpand = true
                 ) {
+                    console.log(list)
                     let arr = [];
                     list.forEach(item => {
                         item.level = level;
@@ -99,6 +100,7 @@
                     console.log(arr)
                     return arr;
                 };
+                console.log(this.tree)
                 return flatten(this.tree, "children", 1, {
                     level: 0,
                     visible: true,
@@ -107,7 +109,13 @@
                 });
             },
             visibleCount() {
+                // ?? 为什么 * 3
                 return Math.floor(this.option.height / this.option.itemHeight) * 3;
+            }
+        },
+        watch:{
+            tree(newVal){
+
             }
         },
         methods: {
@@ -117,7 +125,10 @@
                 this.handleScroll();
             },
             handleScroll() {
+
                 const scrollTop = this.$refs.scroller.scrollTop - this.option.height;
+                console.log(this.$refs.scroller.scrollTop)
+                console.log(scrollTop)
                 this.updateVisibleData(scrollTop > 0 ? scrollTop : 0);
             },
             updateVisibleData(scrollTop = 0) {
@@ -133,18 +144,22 @@
                 this.visibleData = allVisibleData.slice(start, end);
                 console.log("+++++")
                 console.log(this.visibleData)
+                // ? 为什么要设置offset
                 this.offset = start * this.option.itemHeight;
             },
             getContentHeight() {
                 this.contentHeight =(this.flattenTree || []).filter(item => item.visible).length * this.option.itemHeight + "px";
             },
             toggleExpand(item) {
+                // 引用传递 同个引用只会调一次observe
                 const isExpand = item.expand;
                 if (isExpand) {
                     this.collapse(item, true); // 折叠
                 } else {
                     this.expand(item, true); // 展开
                 }
+
+                console.log(this.flattenTree)
                 this.updateView();
             },
             //展开节点
@@ -155,6 +170,8 @@
             //折叠节点
             collapse(item) {
                 item.expand = false;
+                console.log(this.tree)
+                console.log(this.flattenTree)
                 this.recursionVisible(item.children, false);
             },
 
@@ -183,7 +200,7 @@
                 children.forEach(node => {
                     node.visible = status;
                     if (node.children) {
-                    this.recursionVisible(node.children, status);
+                        this.recursionVisible(node.children, status);
                     }
                 });
             }

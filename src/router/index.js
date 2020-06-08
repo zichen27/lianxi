@@ -13,14 +13,25 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            redirect: '/tree',
+            redirect: '/ces',
             component: () => import('@/views/home/index.vue'),
             children: [
                 {
                     path: 'tree',
                     name: 'tree',
                     component: () => import('@/views/tree/index.vue'),
-                }
+                },
+                {
+                    path: 'layout',
+                    name: 'layout',
+                    component: () => import('@/views/layout/index.vue'),
+                },
+                {
+                    path: 'ces',
+                    name: 'ces',
+                    component: () => import('@/views/ces/index.vue'),
+                },
+
             ]
         }
     ]

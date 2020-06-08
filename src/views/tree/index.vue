@@ -5,6 +5,12 @@
                 <div>{{ item.name }}</div>
             </template>
         </tree-select>
+        <!-- <div v-for="(item,index) in aaa" :key="item.id">
+            <p @click="fun(item,index)">{{item.name}}</p>
+        </div>
+        <div v-for="(item,index) in bbb" :key="index" @click="fun(item,index)">
+            {{item.name}}
+        </div> -->
     </div>
 </template>
 <script>
@@ -58,12 +64,52 @@
                                 id:'2.2',
                             }
                         ]
+                    },
+                    {
+                        name:'测试3',
+                        id:'3',
+                        children:[
+                            {
+                                name:'测试3.1',
+                                id:'3.1',
+                                children:[
+                                    {
+                                        name:'测试3.1.1',
+                                        id:'3.1.1',
+                                    },
+                                ]
+                            },
+                            {
+                                name:'测试3.2',
+                                id:'3.2',
+                            }
+                        ]
                     }
                 ],
                 option:{
-                    height: 500, //滚动容器的高度
+                    height: 100, //滚动容器的高度
                     itemHeight: 25 // 单个item的高度
+                },
+                aaa:[
+                    {name:'111',id:'1'},
+                    {name:'222',id:'2'},
+                    {name:'333',id:'3'},
+                ],
+                bbb:{
+                    a1:{
+                        name:'111',id:'1'
+                    },
+                    a2:{
+                        name:'222',id:'2'
+                    }
                 }
+            }
+        },
+        methods:{
+            fun(item,index){
+                item.name = '5555'
+                console.log(this.aaa)
+                console.log(this.bbb)
             }
         }
     }
