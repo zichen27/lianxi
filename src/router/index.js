@@ -13,7 +13,7 @@ export default new Router({
         {
             path: '/',
             name: 'home',
-            redirect: '/ces',
+            redirect: '/lazyload',
             component: () => import('@/views/home/index.vue'),
             children: [
                 {
@@ -30,6 +30,11 @@ export default new Router({
                     path: 'ces',
                     name: 'ces',
                     component: () => import('@/views/ces/index.vue'),
+                },
+                {
+                    path: 'lazyload',
+                    name: 'lazyload',
+                    component: () => import('@/views/lazyload/index.vue'),
                 },
 
             ]
